@@ -1,24 +1,30 @@
-import axios from 'axios';
-import { useState } from 'react';
-import { Button } from './components/ui/button';
+
+import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from 'react-router-dom';
+import Home from './Home';
+import Blog from './Blog';
+import About from './About';
+import Layout from './Layout';
+import SignUp from './SignUp';
+import SignIn from './SignIn';
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route element={<Layout />}>
+      <Route path='/' element={<Home />} />
+      <Route path="blog" element={<Blog />} />
+      <Route path="about" element={<About />} />
+      <Route path="signup" element={<SignUp />} />
+      <Route path="signin" element={<SignIn />} />
+    </Route>
+  )
+)
 
 function App() {
-  let [data, setData] = useState('');
-  axios.get(`http://localhost:3000/api/hello`)
-    .then(res => {
-      console.log(res)
-      setData(res.data);
-    })
-    .catch(error => console.log(error))
 
   return (
-    <div className="bg-gray-950 w-full h-screen text-gray-300">
-      <div>
-        <h1 className="text-3xl text-center pt-2">Blog App</h1>
-        <p>{data}</p>
-        <Button variant="destructive">Shadcn/ui</Button>
-      </div>
-    </div>
+    <>
+      <RouterProvider router={router} />
+    </>
   )
 }
 

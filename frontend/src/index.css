@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
  
+:root{
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: normal;
+}
+
+h1, h2 {
+  font-family: "Trirong", serif;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
