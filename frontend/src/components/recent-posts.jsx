@@ -13,7 +13,7 @@ export default function RecentPosts() {
                         className="w-full aspect-[4/3]  object-cover"
                     />
                 </div>
-                <div  className="w-full p-4 mx-10">
+                <div  className="w-full p-4 px-10">
                     <p>Jan 4, 2024</p>
                     <div className="border-b py-6">
                     
