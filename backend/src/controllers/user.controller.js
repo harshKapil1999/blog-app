@@ -26,9 +26,18 @@ const createUser = async (req, res) => {
 
 const getUserInfoByID = async (req, res) => {};
 
+const handleSignIn = async (req, res) => {
+    const {email, password} = req.body;
+    const data = {email, password};
+    console.log(data);
+    res.status(200).json(data);
+    
+};
+
 
 export {
     getAllUsers,
     createUser,
     getUserInfoByID,
+    handleSignIn
 }

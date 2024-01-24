@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom"
 import Logo from "./logo"
 import { cn } from "@/lib/utils";
+import UserAccount from "./user-account";
 
 function Header() {
 
@@ -16,10 +17,6 @@ function Header() {
         {
             name: "About",
             href: "/about"
-        },
-        {
-            name: "SignIn",
-            href: "/signin"
         },
     ]
 
@@ -41,6 +38,9 @@ function Header() {
                        )} to={liItem.href}>{liItem.name}</Link> 
                     </li>
                 ))}
+                <li>
+                    <UserAccount />
+                </li>
             </ul>
         </div>
     </>
