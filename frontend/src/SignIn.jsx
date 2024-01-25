@@ -1,24 +1,13 @@
 import { useState } from "react";
 import { Button } from "./components/ui/button";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 
 export default function SignIn() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [response, setResponse] = useState("")
-  /* const [data, setData] = useState({
-    email: email,
-    password: pa
-  }); */
-
-  /* const handleChange = (e) => {
-    const value = e.target.value;
-    setData({
-      ...data,
-      [e.target.name]: value,
-    });
-  }; */
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -42,7 +31,8 @@ export default function SignIn() {
     <div className="flex items-start justify-center w-full min-h-screen flex-col md:flex-row">
       <div className="w-full p-10 items-center">
         <div className="w-full max-w-md mx-auto">
-          <h1 className="text-2xl lg:text-3xl py-2">Sign in to your account</h1>
+          <h1 className="text-2xl lg:text-3xl py-2 font-bold">Sign up to your account</h1>
+          <p className=" font-semibold py-1">Not a member? <Link to="/signup" className=" text-blue-800 hover:text-blue-700">Sign up</Link></p>
           <form className="flex flex-col" onSubmit={handleSubmit} method="post">
             <label htmlFor="" className="my-1">Email address</label>
               <input type="text" name="email" className="outline p-1 mb-4 rounded-sm" value={email} onChange={(e) => setEmail(e.target.value)} required/>

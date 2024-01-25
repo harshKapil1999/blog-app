@@ -6,8 +6,6 @@ import About from './About';
 import Layout from './Layout';
 import SignUp from './SignUp';
 import SignIn from './SignIn';
-//import Header from './components/header';
-import Footer from './components/footer';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,9 +27,7 @@ function App() {
 
   return (
     <>
-      {/* <Header /> */}
       <RouterProvider router={router} />
-      <Footer />
     </>
   )
 }
