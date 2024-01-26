@@ -5,23 +5,22 @@ import { useState } from "react";
 
 
 export default function SignUp() {
-  const [name, setName] = useState("")
+  /* const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [response, setResponse] = useState("")
+   */
 
+  const [formData, setFormData] = useState({});
+  const [response, setResponse] = useState("")
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  }
   const handleSubmit = (e) => {
     e.preventDefault();
-    const userData = {
-      name: name,
-      email: email,
-      password: password,
-    };
-    console.log(userData)
-    axios.post("http://localhost:3000/api/user/signup", userData)
+    axios.post("http://localhost:3000/api/auth/signup", formData)
     .then((response) => {
       console.log(response.status, response.data, response)
-      setResponse("User Successfully Signed In")
+      setResponse("User Successfully Signed Up")
     })
     .catch((error) => {console.log(error)})
     .then(console.log("request Completed"))
@@ -35,13 +34,13 @@ export default function SignUp() {
           <p className=" font-semibold py-1">Already a member? <Link to="/signin" className=" text-blue-800 hover:text-blue-700">Sign in</Link> to your account.</p>
           <form className="flex flex-col" onSubmit={handleSubmit} method="post">
           <label htmlFor="" className="my-1">Name</label>
-              <input type="text" name="name" className="outline p-1 mb-4 rounded-sm" value={name} onChange={(e) => setName(e.target.value)} required/>
+              <input type="text" name="name" className="outline p-1 mb-4 rounded-sm" /* value={name} */ onChange={handleChange /* (e) => setName(e.target.value) */} required/>
             <label htmlFor="" className="my-1">Email address</label>
 
-              <input type="text" name="email" className="outline p-1 mb-4 rounded-sm" value={email} onChange={(e) => setEmail(e.target.value)} required/>
+              <input type="text" name="email" className="outline p-1 mb-4 rounded-sm" /* value={email} */ onChange={handleChange /* (e) => setEmail(e.target.value) */} required/>
             
             <label htmlFor="" className="my-1">Password</label>
-              <input type="text" name="password" className="outline p-1 mb-4 rounded-sm" value={password} onChange={(e) => setPassword(e.target.value)} required/>
+              <input type="text" name="password" className="outline p-1 mb-4 rounded-sm" /* value={password} */ onChange={handleChange /* (e) => setPassword(e.target.value) */} required/>
             
 
             <Button className="my-4" type="submit">Sign up</Button>

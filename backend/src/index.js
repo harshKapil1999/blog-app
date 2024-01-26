@@ -8,6 +8,7 @@ import userRouter from "./routes/user.route.js"
 import authRouter from "./routes/auth.route.js"
 import blogRouter from "./routes/blog.route.js"
 import { CreateBlog } from './controllers/blog.controller.js';
+import { errorHandler } from './middlewares/errorhandler.middleware.js';
 
 const app = express();
 const port = process.env.PORT;
@@ -27,6 +28,7 @@ app.use('/api/user', userRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/blog', blogRouter);
 
+app.use(errorHandler);
 /* app.use(express.urlencoded({
   extended: true,
   limit: "16kb"
