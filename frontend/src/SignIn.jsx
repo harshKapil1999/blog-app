@@ -5,12 +5,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signInStart, signInSuccess, signInFailure } from "./redux/user/userSlice";
 import GoogleAuth from "./components/google-auth";
-
+import { toast } from "sonner"
 
 export default function SignIn() {
 
   const [formData, setFormData] = useState({});
-  const [response, setResponse] = useState("")
   const {loading, error: errorMessage} = useSelector(state => state.user)
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -23,19 +22,19 @@ export default function SignIn() {
     dispatch(signInStart());
     axios.post("http://localhost:3000/api/auth/signin", formData)
     .then((response) => {
-      console.log(response.status, response.data, response)
+      //console.log(response.status, response.data, response)
       dispatch(signInSuccess(response.data));
-      setResponse("User Successfully Signed In")
+      toast("User Successfully Signed In")
       setTimeout(() => {
         navigate('/')
       }, 2000);
     })
     .catch((error) => {
-      setResponse(error.message);
       dispatch(signInFailure(error.message))
+      toast(errorMessage)
       
     })
-    .then(console.log('request completed'))
+    //.then(console.log('request completed'))
   };
 
   
@@ -62,7 +61,6 @@ export default function SignIn() {
             </div>
               <GoogleAuth />
           </form>
-          <p className="text-2xl text-green-800 ">{response}</p>
       </div>
       </div>
       <div className=" w-full">

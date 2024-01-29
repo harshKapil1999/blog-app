@@ -38,7 +38,7 @@ function Header() {
                 {navLinks.map((liItem) => (
                     <li key={liItem.href} className="p-2">
                        <Link className={cn("hover:text-red-800",
-                            pathname === liItem.href ? "text-red-800" : "text-black "
+                            pathname === liItem.href ? "text-red-800 border-b-2 border-b-red-800" : "text-black "
                        )} to={liItem.href}>{liItem.name}</Link> 
                     </li>
                 ))}

@@ -1,15 +1,18 @@
 import { app } from "@/firebase";
 import { Button } from "./ui/button";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { signInSuccess, signInStart, signInFailure } from "@/redux/user/userSlice";
+import { toast } from "sonner"
+import { useNavigate } from "react-router-dom";
 
 export default function GoogleAuth() {
     const auth = getAuth(app);
     const dispatch = useDispatch();
+    const nevigate = useNavigate();
     const handleClick = async () => {
+        dispatch(signInStart());
         const provider = new GoogleAuthProvider()
         provider.setCustomParameters({ prompt: 'select_account' })
         signInWithPopup(auth, provider)
@@ -27,39 +30,36 @@ export default function GoogleAuth() {
                     password: user.uid,
                     avatar: user.photoURL,
                 }
-                console.log(userData)
+                //console.log(userData)
                 axios.post("http://localhost:3000/api/auth/google", userData)
                     .then((response) => {
                         dispatch(signInSuccess(response.data))
-                    console.log(/* response.status, response.data, */ response)
+                        //console.log(/* response.status, response.data, */ response)
+                        toast("User has been successfully signed in.")
+                        setTimeout(() => {
+                            nevigate("/")
+                        }, 2000);
                     })
-                    .catch((error) => {console.log(error)})
-                    .then(console.log("request Completed"))
+                    .catch( (error) => {
+                        //console.log(error)
+                        dispatch(signInFailure(error))
+                        toast("Something went wrong! Try Again.")
+                    }
+                    )
+                    //.then(console.log("request Completed"))
 
             }).catch((error) => {
                 // Handle Errors here.
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 // The email of the user's account used.
-                const email = error.customData.email;
+                //const email = error.customData.email;
                 // The AuthCredential type that was used.
-                const credential = GoogleAuthProvider.credentialFromError(error);
+                //const credential = GoogleAuthProvider.credentialFromError(error);
                 // ...
+                dispatch(signInFailure(error))
+                toast(errorMessage, errorCode)
             });
-        /* try {
-            const resultFromGoogle = await signInWithPopup(auth, provider)
-            console.log(resultFromGoogle);
-            const data = resultFromGoogle.user;
-            setFormData({
-                name: data.displayName,
-                email: data.email,
-                password: data.uid,
-                avatar: data.photoURL,
-            });
-            console.log(formData)
-        } catch (error) {
-            console.log(error);
-        } */
     }
 
 

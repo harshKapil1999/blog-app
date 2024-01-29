@@ -1,18 +1,14 @@
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "./components/ui/button";
 import axios from "axios";
 import { useState } from "react";
 import GoogleAuth from "./components/google-auth";
-
+import { toast } from "sonner"
 
 export default function SignUp() {
-  /* const [name, setName] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-   */
-
   const [formData, setFormData] = useState({});
-  const [response, setResponse] = useState("")
+  const nevigate = useNavigate();
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
@@ -20,11 +16,17 @@ export default function SignUp() {
     e.preventDefault();
     axios.post("http://localhost:3000/api/auth/signup", formData)
     .then((response) => {
-      console.log(response.status, response.data, response)
-      setResponse("User Successfully Signed Up")
+      //console.log(response.status, response.data, response)
+      toast("User Successfully Signed Up.")
+      setTimeout(() => {
+        nevigate("/signin")
+      }, 2000);
     })
-    .catch((error) => {console.log(error)})
-    .then(console.log("request Completed"))
+    .catch((error) => {
+      //console.log(error)
+      toast(error)
+    })
+    //.then(console.log("request Completed"))
   };
 
   return (
@@ -52,7 +54,6 @@ export default function SignUp() {
             </div>
             <GoogleAuth />
           </form>
-          <p className="text-2xl text-green-800 ">{response}</p>
       </div>
       </div>
       <div className=" w-full">
