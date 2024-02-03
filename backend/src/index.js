@@ -7,7 +7,7 @@ import ConnectDB from "./db/connection.db.js"
 import userRouter from "./routes/user.route.js"
 import authRouter from "./routes/auth.route.js"
 import blogRouter from "./routes/blog.route.js"
-import { CreateBlog } from './controllers/blog.controller.js';
+
 import { errorHandler } from './middlewares/errorhandler.middleware.js';
 
 const app = express();

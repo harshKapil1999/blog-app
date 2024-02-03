@@ -1,7 +1,6 @@
 import { Router } from "express";
 
 import { 
-    CreateBlog,
     createBlog,
     deleteBlog,
     getAllBlogs,
@@ -17,6 +16,6 @@ import {
  router.route('/').post(createBlog);
  router.route('/:id').patch(updateBlog);
  router.route('/:id').delete(deleteBlog);
- router.route('/create').post(CreateBlog);
+
 
  export default router;

@@ -24,7 +24,7 @@ export default function UserAccount() {
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuLabel>{currentUser.name}</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <Link to="/signin">
+            <Link to="/profile">
             <DropdownMenuItem>Profile</DropdownMenuItem>
             </Link>
             <Link to="/signup">

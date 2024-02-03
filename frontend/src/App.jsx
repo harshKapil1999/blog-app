@@ -7,6 +7,9 @@ import Layout from './Layout';
 import SignUp from './SignUp';
 import SignIn from './SignIn';
 import Post from './Post';
+import PrivateRoutes from './PrivateRoutes';
+import Profile from './components/profile';
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -18,7 +21,11 @@ const router = createBrowserRouter(
         <Route path="about" element={<About />} />
         <Route path="signup" element={<SignUp />} />
         <Route path="signin" element={<SignIn />} />
-        <Route path="/post" element={<Post />} />
+        <Route element={<PrivateRoutes />}>
+          <Route path="/post" element={<Post />} />
+          <Route path="/profile" element={<Profile />} />
+        </Route>
+        
       </Route>
     </>
     

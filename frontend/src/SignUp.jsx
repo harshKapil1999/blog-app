@@ -37,13 +37,13 @@ export default function SignUp() {
           <p className=" font-semibold py-1">Already a member? <Link to="/signin" className=" text-blue-800 hover:text-blue-700">Sign in</Link> to your account.</p>
           <form className="flex flex-col" onSubmit={handleSubmit} method="post">
           <label htmlFor="" className="my-1">Name</label>
-              <input type="text" name="name" className="outline p-1 mb-4 rounded-sm" /* value={name} */ onChange={handleChange /* (e) => setName(e.target.value) */} required/>
+              <input type="text" name="name" className="outline p-1 mb-4 rounded-sm" onChange={handleChange} required/>
+           
             <label htmlFor="" className="my-1">Email address</label>
-
-              <input type="text" name="email" className="outline p-1 mb-4 rounded-sm" /* value={email} */ onChange={handleChange /* (e) => setEmail(e.target.value) */} required/>
+              <input type="email" name="email" className="outline p-1 mb-4 rounded-sm" onChange={handleChange } required/>
             
             <label htmlFor="" className="my-1">Password</label>
-              <input type="text" name="password" className="outline p-1 mb-4 rounded-sm" /* value={password} */ onChange={handleChange /* (e) => setPassword(e.target.value) */} required/>
+              <input type="password" name="password" className="outline p-1 mb-4 rounded-sm"  onChange={handleChange } required/>
             
 
             <Button className="my-4" type="submit">Sign up</Button>
