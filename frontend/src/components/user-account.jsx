@@ -9,10 +9,27 @@ import {
 import { UserCircle } from "lucide-react"
 import { Link } from "react-router-dom"
 import { useSelector } from "react-redux"
-  
+import axios from "axios";
+import { signOutSuccess } from "@/redux/user/userSlice"; 
+import { useDispatch } from "react-redux";
+import { toast } from "sonner";
 
 export default function UserAccount() {
+
   const {currentUser} = useSelector(state => state.user);
+  const dispatch = useDispatch();
+  const handleSignout = async () => {
+       axios.post('http://localhost:3000/api/auth/signout')
+        .then((response) => {//console.log(response.data)
+          dispatch(signOutSuccess(response.data));
+          toast("User has been Successfully Signed out")
+        })
+        .catch((error) => {//console.log(error)
+          toast(error.message)
+        })
+   
+  }
+
   return (
     <div>
       {currentUser ? (
@@ -31,7 +48,7 @@ export default function UserAccount() {
             <DropdownMenuItem>Settings</DropdownMenuItem>
             </Link>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Sign out</DropdownMenuItem>
+            <DropdownMenuItem onClick={handleSignout}>Sign out</DropdownMenuItem>
         </DropdownMenuContent>
         </DropdownMenu>
       ) : (

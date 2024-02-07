@@ -70,8 +70,20 @@ const googleAuth = async (req, res, next) => {
     }
 }
 
+const signOut = async (req, res, next) => {
+    try {
+        res
+            .clearCookie('access_token')
+            .status(200)
+            .json('User has been signout out');
+    } catch (error) {
+        next(error)
+    }
+}
+
 export {
     signUp,
     signIn,
     googleAuth,
+    signOut,
 };

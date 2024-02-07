@@ -49,9 +49,9 @@ export default function Post() {
     .then(console.log("Request completed"));
   }
   return (
-    <div className=" flex items-center justify-center flex-col p-4">
+    <div className=" flex items-center justify-center flex-col p-4 w-full">
       <h1 className="text-2xl">Post</h1>
-      <form className="flex flex-col w-full">
+      <form className="flex flex-col w-full max-w-3xl">
         
         <Label className="my-2">Title</Label>
         <Input name='title' className="mb-4" type='text' onChange={handleChange} />
@@ -78,6 +78,14 @@ export default function Post() {
         <div className="w-full flex my-4 items-center gap-4">
           <Label className="">Thumbnail Image</Label>
           <UploadWidget className=" w-full" setCloudinaryResult={setCloudinaryResult}/>
+          {urlRef.current ? (
+          <img src={urlRef.current} alt="preview image" className="w-[35dvw] h-auto min-h-[25dvw]"/>
+          ): (
+           <div className="w-[35dvw] h-auto min-h-[25dvw] flex items-start justify-center bg-slate-600">
+            <h1 className="m-auto text-2xl text-white">Preview Image</h1>
+           </div>
+          )}
+          
         </div>
         
         <Label className="my-2">Short Description</Label>
