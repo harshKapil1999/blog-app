@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import UploadWidget from "./components/upload-widget";
 import { Input } from "./components/ui/input";
 import { Label } from "./components/ui/label";
@@ -41,6 +43,11 @@ export default function Post() {
     console.log(formData)
   }
 
+  const handleBlogDescription = (value) => {
+    setFormData({ ...formData, description: value })
+    console.log(formData)
+  }
+
   const handleSubmit = (e) => {
   e.preventDefault() 
   axios.post("http://localhost:3000/api/blog", formData)
@@ -54,10 +61,10 @@ export default function Post() {
       <form className="flex flex-col w-full max-w-3xl">
         
         <Label className="my-2">Title</Label>
-        <Input name='title' className="mb-4" type='text' onChange={handleChange} />
+        <Input name='title' className="mb-4" type='text' onChange={handleChange} required/>
 
         <Label className="my-2">Category</Label>
-        <Select name="category" onValueChange={(value) => handleSelectCategory(value)} >
+        <Select name="category" onValueChange={(value) => handleSelectCategory(value)} required>
           <SelectTrigger>
             <SelectValue placeholder="Select Category" />
           </SelectTrigger>
@@ -89,15 +96,17 @@ export default function Post() {
         </div>
         
         <Label className="my-2">Short Description</Label>
-        <Textarea name='shortDescription' className="mb-4" onChange={handleChange} />
+        <Textarea name='shortDescription' className="mb-4" onChange={handleChange} required/>
 
+        <div className=" flex flex-col my-2 min-h-[40dvh] ">
         <Label className="my-2">Description</Label>
-        <Textarea name='description' className="mb-4" onChange={handleChange} />
+       {/*  <Textarea name='description' className="mb-4" onChange={handleChange} /> */}
+        <ReactQuill theme="snow" className=" w-full h-40" onChange={(value) => handleBlogDescription(value)} required/>
 
-        <Button type='submit' onClick={handleSubmit}>Post</Button>
+       
+        </div>
+         <Button type='submit' className=" mt-2" onClick={handleSubmit}>Post</Button>
       </form>
-      
-
     </div>
   )
 }

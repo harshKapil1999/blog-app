@@ -51,9 +51,8 @@ export default function SignIn() {
             
             <label htmlFor="" className="my-1">Password</label>
               <input type="password" name="password" className="outline p-1 mb-4 rounded-sm" onChange={handleChange} required/>
-            
 
-            <Button className="my-4" type="submit">Sign in</Button>
+            <Button className="my-4" type="submit" disabled={loading}>Sign in</Button>
             <div className="w-full flex items-center justify-center">
               <hr className="w-full"/>
               <p className="w-full mx-auto flex items-center justify-center">Or continue with</p>

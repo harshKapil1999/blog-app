@@ -1,9 +1,10 @@
+import axios from "axios";
+import GoogleAuth from "./components/google-auth";
+
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Button } from "./components/ui/button";
-import axios from "axios";
-import { useState } from "react";
-import GoogleAuth from "./components/google-auth";
 import { toast } from "sonner"
 
 export default function SignUp() {
@@ -24,7 +25,7 @@ export default function SignUp() {
     })
     .catch((error) => {
       //console.log(error)
-      toast(error)
+      toast(error.message)
     })
     //.then(console.log("request Completed"))
   };
