@@ -6,9 +6,9 @@ const getAllBlogs = async (req, res) => {};
 const getBlogDetails = async (req, res) => {};
 
 const createBlog = async (req, res, next) => {
-    const { title, imageUrl, shortDescription, description, category } = req.body;
+    const { title, imageUrl, shortDescription, description, category, userId } = req.body;
     console.log({ title, imageUrl, shortDescription, description, category });
-    if(!title || !imageUrl || !shortDescription || !description || !category) {
+    if(!title || !imageUrl || !shortDescription || !description || !category || !userId) {
         return res.status(400).json({ message: "All fields are required" })
     }
 
@@ -18,10 +18,22 @@ const createBlog = async (req, res, next) => {
         shortDescription,
         description,
         category,
+        creator: userId,
     })
 
     try {
         await newBlog.save()
+
+        await User.findOneAndUpdate(
+            {
+                _id: userId
+            },
+            {
+            $push: {
+                allBlogs: newBlog._id
+            }
+        })
+
         res.status(201).json({newBlog, message: "Blog is Created Successfully"})
     } catch (error) {
         errorHandler(error)

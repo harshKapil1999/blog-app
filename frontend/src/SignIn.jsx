@@ -31,7 +31,7 @@ export default function SignIn() {
     })
     .catch((error) => {
       dispatch(signInFailure(error.message))
-      toast(errorMessage)
+      toast(error.message)
       
     })
     //.then(console.log('request completed'))

@@ -14,9 +14,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { toast } from "sonner";
+import { useSelector } from "react-redux"
 
 export default function Post() {
   const [cloudinaryResult, setCloudinaryResult] = useState({});
+  const {currentUser} = useSelector(state => state.user);
   //console.log(cloudinaryResult.url)
   const urlRef = useRef();
   const [formData, setFormData] = useState({
@@ -27,10 +30,10 @@ export default function Post() {
     category: "",
     likes: 0,
     views: 0,
-
+    userId: currentUser._id,
   })
   useEffect(() => {
-    urlRef.current = cloudinaryResult.url
+    urlRef.current = cloudinaryResult.secure_url
   }, [cloudinaryResult])
 
   const handleChange = (e) => {
@@ -51,9 +54,16 @@ export default function Post() {
   const handleSubmit = (e) => {
   e.preventDefault() 
   axios.post("http://localhost:3000/api/blog", formData)
-    .then((response) => {console.log(response)})
-    .catch((error) => console.log(error))
-    .then(console.log("Request completed"));
+    .then((response) => {
+      //console.log(response)
+      const data = response.data;
+      toast(data.message);
+
+    })
+    .catch((error) => toast(error.message)
+      //console.log(error) 
+    )
+   // .then(console.log("Request completed"));
   }
   return (
     <div className=" flex items-center justify-center flex-col p-4 w-full">
@@ -98,10 +108,10 @@ export default function Post() {
         <Label className="my-2">Short Description</Label>
         <Textarea name='shortDescription' className="mb-4" onChange={handleChange} required/>
 
-        <div className=" flex flex-col my-2 min-h-[40dvh] ">
+        <div className=" flex flex-col my-2 min-h-[60dvh] ">
         <Label className="my-2">Description</Label>
        {/*  <Textarea name='description' className="mb-4" onChange={handleChange} /> */}
-        <ReactQuill theme="snow" className=" w-full h-40" onChange={(value) => handleBlogDescription(value)} required/>
+        <ReactQuill theme="snow" className=" w-full h-[46dvh]" onChange={(value) => handleBlogDescription(value)} required/>
 
        
         </div>
