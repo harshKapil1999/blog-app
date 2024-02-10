@@ -2,10 +2,32 @@ import { Link } from "react-router-dom";
 import UserInfo from "./components/user-info";
 import { Heart, PlusCircle } from "lucide-react";
 import BlogsPost from "./components/blogs-post";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 
 
 export default function Blog() {
+
+  const [allBlogs, setAllBlogs] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:3000/api/blog')
+    .then((response) => {
+      //console.log(response)
+
+      const data = response.data
+      setAllBlogs(data);
+      
+    })
+    .catch((error) => toast(error.message))
+
+  }, [])
+
+  //console.log(allBlogs) 
+  
+
   return (
     
     <div className="w-full min-h-screen flex flex-col ">
@@ -20,7 +42,7 @@ export default function Blog() {
             </Link>
         </div>
         <div className=" w-full grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="w-full border">
+          {/* <div className="w-full border">
             <img 
               src="https://images.pexels.com/photos/3771055/pexels-photo-3771055.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
               alt="post"
@@ -60,7 +82,35 @@ export default function Blog() {
               
             </div>
           </div>
-          <BlogsPost />
+          <BlogsPost /> */}
+
+
+          {allBlogs.map((blog, index) => (
+            <div key={index} className="w-full border">
+            <img 
+              src={blog.imageUrl} 
+              alt={blog.title}
+              className="w-full aspect-[4/3]  object-cover"
+            />
+            <div className=" w-full p-4 md:pb-8">
+
+              <UserInfo createdAt={blog.createdAt} name={blog.creator.name} avatar={blog.creator.avatar}/>
+              <h2 className="text-xl font-bold p-2">{blog.title}</h2>
+              <p className="text-sm md:text-base p-2">{blog.shortDescription}</p>
+            </div>
+            <div className="flex items-center justify-between m-4 p-2 border-t">
+              <p className=" text-xs ">{blog.views}</p>
+              <span className=" flex items-center justify-center">
+                <p className="p-1 text-xs">{blog.likes}</p>
+                <Heart className=" w-6 h-6" />
+              </span>
+              
+            </div>
+          </div>
+          ))
+          
+          }
+
         </div>
       </div>
       

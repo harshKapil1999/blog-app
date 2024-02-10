@@ -2,8 +2,20 @@ import { errorHandler } from "../middlewares/errorhandler.middleware.js";
 import Blog from "../models/blog.model.js";
 import User from "../models/user.model.js";
 
-const getAllBlogs = async (req, res) => {};
-const getBlogDetails = async (req, res) => {};
+const getAllBlogs = async (req, res) => {
+    try {
+        const allBlogs = await Blog.find({}).populate('creator', '-password');
+        res.status(200).json(allBlogs);
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+const getBlogDetails = async (req, res) => {
+    const blogId = req.params['id'];
+    console.log(blogId)
+    res.send(req.params);
+};
 
 const createBlog = async (req, res, next) => {
     const { title, imageUrl, shortDescription, description, category, userId } = req.body;

@@ -6,6 +6,7 @@ import { Button } from "./ui/button";
 const Profile = () => {
     const { currentUser } = useSelector(state => state.user);
     //console.log(currentUser)
+    
     const [formData, setFormData] = useState({
         name: currentUser.name,
         email: currentUser.email,
