@@ -9,6 +9,7 @@ import SignIn from './SignIn';
 import Post from './Post';
 import PrivateRoutes from './PrivateRoutes';
 import Profile from './components/profile';
+import SelectedBlog from './SelectedBlog';
 
 
 const router = createBrowserRouter(
@@ -18,6 +19,7 @@ const router = createBrowserRouter(
       <Route element={<Layout />}>
         <Route path='/' element={<Home />} />
         <Route path="blog" element={<Blog />} />
+        <Route path='blog/:blogId' element={<SelectedBlog />}/>
         <Route path="about" element={<About />} />
         <Route path="signup" element={<SignUp />} />
         <Route path="signin" element={<SignIn />} />

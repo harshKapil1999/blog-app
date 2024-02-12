@@ -1,20 +1,26 @@
-import { errorHandler } from "../middlewares/errorhandler.middleware.js";
+import { apiErrorHandler, errorHandler } from "../middlewares/errorhandler.middleware.js";
 import Blog from "../models/blog.model.js";
 import User from "../models/user.model.js";
 
 const getAllBlogs = async (req, res) => {
     try {
-        const allBlogs = await Blog.find({}).populate('creator', '-password');
+        const allBlogs = await Blog.find({}).populate('creator', '-password -email');
         res.status(200).json(allBlogs);
     } catch (error) {
         console.log(error);
     }
 };
 
-const getBlogDetails = async (req, res) => {
+const getBlogDetails = async (req, res, next) => {
     const blogId = req.params['id'];
-    console.log(blogId)
-    res.send(req.params);
+    /* const validBlog = await Blog.find({_id: blogId});
+    if(!validBlog) return next(apiErrorHandler(404, "Blog not found"));  */
+
+    const blog = await Blog.findById(blogId).populate('creator', '-password -email');
+    if(!blog) return next(apiErrorHandler(404, "Blog not found"));
+
+
+    res.status(200).json(blog);
 };
 
 const createBlog = async (req, res, next) => {

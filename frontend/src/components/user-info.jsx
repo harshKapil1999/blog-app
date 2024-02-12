@@ -1,7 +1,7 @@
 import { MoreVertical } from "lucide-react";
 
 
-export default function UserInfo({createdAt, name, avatar}) {
+export default function UserInfo({ createdAt, name, avatar }) {
 
   //const time = new Date("2024-02-08T18:04:20.669Z");
     //console.log(time); 

@@ -1,7 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import UserInfo from "./components/user-info";
 import { Heart, PlusCircle } from "lucide-react";
-import BlogsPost from "./components/blogs-post";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -9,8 +8,9 @@ import { toast } from "sonner";
 
 
 export default function Blog() {
-
+  const navigate = useNavigate();
   const [allBlogs, setAllBlogs] = useState([]);
+  const [views, setViews] = useState(0);
 
   useEffect(() => {
     axios.get('http://localhost:3000/api/blog')
@@ -26,7 +26,10 @@ export default function Blog() {
   }, [])
 
   //console.log(allBlogs) 
-  
+  const handleUpdate = () => { 
+      setViews((prev) => prev+1);
+      console.log(views)
+  }
 
   return (
     
@@ -41,52 +44,9 @@ export default function Blog() {
              <PlusCircle className="h-6 w-6 p-1" /> Create Blog
             </Link>
         </div>
-        <div className=" w-full grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* <div className="w-full border">
-            <img 
-              src="https://images.pexels.com/photos/3771055/pexels-photo-3771055.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
-              alt="post"
-              className="w-full aspect-[4/3]  object-cover"
-            />
-            <div className=" w-full p-4 md:pb-8">
-              <UserInfo />
-              <h2 className="text-xl font-bold p-2">The one thing I would tell to my 16 year old self</h2>
-              <p className="text-sm md:text-base p-2">Create a blog post subtitle that summarizes your post in a few short, punchy sentences and entices your audience to continue reading....</p>
-            </div>
-            <div className="flex items-center justify-between m-4 p-2 border-t">
-              <p className=" text-xs ">4 views</p>
-              <span className=" flex items-center justify-center">
-                <p className="p-1 text-xs">2</p>
-                <Heart className=" w-6 h-6" />
-              </span>
-              
-            </div>
-          </div>
-          <div className="w-full border">
-            <img 
-              src="https://images.pexels.com/photos/12403076/pexels-photo-12403076.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
-              alt="post"
-              className="w-full aspect-[4/3]  object-cover"
-            />
-            <div className=" w-full p-4 md:pb-8">
-              <UserInfo />
-              <h2 className="text-xl font-bold p-2">The one thing I would tell to my 16 year old self</h2>
-              <p className="text-sm md:text-base p-2">Create a blog post subtitle that summarizes your post in a few short, punchy sentences and entices your audience to continue reading....</p>
-            </div>
-            <div className="flex items-center justify-between m-4 p-2 border-t">
-              <p className=" text-xs ">4 views</p>
-              <span className=" flex items-center justify-center">
-                <p className="p-1 text-xs">2</p>
-                <Heart className=" w-6 h-6" />
-              </span>
-              
-            </div>
-          </div>
-          <BlogsPost /> */}
-
-
+        <div className=" w-full grid grid-cols-1 md:grid-cols-2 gap-8">
           {allBlogs.map((blog, index) => (
-            <div key={index} className="w-full border">
+            <div key={index} className="w-full border cursor-pointer" onClick={() => navigate(`/blog/${blog._id}`)}>
             <img 
               src={blog.imageUrl} 
               alt={blog.title}
@@ -95,8 +55,10 @@ export default function Blog() {
             <div className=" w-full p-4 md:pb-8">
 
               <UserInfo createdAt={blog.createdAt} name={blog.creator.name} avatar={blog.creator.avatar}/>
+              <div className="hover:text-red-700">
               <h2 className="text-xl font-bold p-2">{blog.title}</h2>
-              <p className="text-sm md:text-base p-2">{blog.shortDescription}</p>
+              <p className="text-sm md:text-base p-2 ">{blog.shortDescription.length > 100 ? (blog.shortDescription.substring(0, 150) + '...') : (blog.shortDescription)}</p>
+              </div>
             </div>
             <div className="flex items-center justify-between m-4 p-2 border-t">
               <p className=" text-xs ">{blog.views}</p>

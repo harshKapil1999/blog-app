@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import UploadWidget from "./components/upload-widget";
@@ -19,9 +19,10 @@ import { useSelector } from "react-redux"
 
 export default function Post() {
   const [cloudinaryResult, setCloudinaryResult] = useState({});
+  const [thumbnailUrl, setThumbnailUrl] = useState("");
   const {currentUser} = useSelector(state => state.user);
   //console.log(cloudinaryResult.url)
-  const urlRef = useRef();
+
   const [formData, setFormData] = useState({
     title: "",
     imageUrl: "",
@@ -33,11 +34,13 @@ export default function Post() {
     userId: currentUser._id,
   })
   useEffect(() => {
-    urlRef.current = cloudinaryResult.secure_url
-  }, [cloudinaryResult])
+    //urlRef.current = cloudinaryResult.secure_url
+    setThumbnailUrl(cloudinaryResult.secure_url);
+    setFormData({...formData, imageUrl: thumbnailUrl})
+  }, [cloudinaryResult, formData, thumbnailUrl])
 
   const handleChange = (e) => {
-   setFormData({...formData, [e.target.name]: e.target.value, imageUrl: urlRef.current})
+   setFormData({...formData, [e.target.name]: e.target.value, imageUrl: thumbnailUrl})
    console.log(formData)
   }
   
@@ -95,8 +98,8 @@ export default function Post() {
         <div className="w-full flex my-4 items-center gap-4">
           <Label className="">Thumbnail Image</Label>
           <UploadWidget className=" w-full" setCloudinaryResult={setCloudinaryResult}/>
-          {urlRef.current ? (
-          <img src={urlRef.current} alt="preview image" className="w-[35dvw] h-auto min-h-[25dvw]"/>
+          {thumbnailUrl ? (
+          <img src={thumbnailUrl} alt="preview image" className="w-[35dvw] h-auto min-h-[25dvw]"/>
           ): (
            <div className="w-[35dvw] h-auto min-h-[25dvw] flex items-start justify-center bg-slate-600">
             <h1 className="m-auto text-2xl text-white">Preview Image</h1>

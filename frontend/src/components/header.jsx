@@ -18,10 +18,6 @@ function Header() {
             name: "About",
             href: "/about"
         },
-        {
-            name: "Post",
-            href: "/post"
-        },
     ]
 
     const location = useLocation();
