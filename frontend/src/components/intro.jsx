@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 
 export default function Intro() {
@@ -22,7 +23,7 @@ export default function Intro() {
                 <p className="text-sm md:text-base p-2">Create a blog post subtitle that summarizes your post in a few short, punchy sentences and entices your audience to continue reading....</p>
             </div>
             <div className=" w-full flex items-center justify-center">
-                <Button variant="outline" className="p-7">All Posts</Button>
+                <Link to="/blog" className="p-3 px-7 hover:text-red-700 outline outline-black" >All Posts</Link>
             </div>
             
         </div>
