@@ -1,4 +1,5 @@
 import { MoreVertical } from "lucide-react";
+import { Button } from "./ui/button";
 
 
 export default function UserInfo({ createdAt, name, avatar }) {
@@ -26,7 +27,7 @@ export default function UserInfo({ createdAt, name, avatar }) {
                 <p>{convertedTime}</p>
             </span> 
         </div>
-        <MoreVertical className=" w-6 h-6" />
+        <Button variant="ghost"><MoreVertical className=" w-6 h-6" /></Button>
     </div>
   )
 }

@@ -6,6 +6,7 @@ import { Input } from "./components/ui/input";
 import { Label } from "./components/ui/label";
 import { Textarea } from "./components/ui/textarea";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { Button } from "./components/ui/button";
 import {
   Select,
@@ -18,6 +19,7 @@ import { toast } from "sonner";
 import { useSelector } from "react-redux"
 
 export default function Post() {
+  const navigate = useNavigate();
   const [cloudinaryResult, setCloudinaryResult] = useState({});
   const [thumbnailUrl, setThumbnailUrl] = useState("");
   const {currentUser} = useSelector(state => state.user);
@@ -41,17 +43,17 @@ export default function Post() {
 
   const handleChange = (e) => {
    setFormData({...formData, [e.target.name]: e.target.value, imageUrl: thumbnailUrl})
-   console.log(formData)
+   //console.log(formData)
   }
   
   const handleSelectCategory = (value) => {
     setFormData({ ...formData, category: value})
-    console.log(formData)
+    //console.log(formData)
   }
 
   const handleBlogDescription = (value) => {
     setFormData({ ...formData, description: value })
-    console.log(formData)
+    //console.log(formData)
   }
 
   const handleSubmit = (e) => {
@@ -61,6 +63,10 @@ export default function Post() {
       //console.log(response)
       const data = response.data;
       toast(data.message);
+      console.log(data);
+      setTimeout(() => {
+        navigate(`/blog/${data.newBlog._id}`)
+      }, 2000);
 
     })
     .catch((error) => toast(error.message)

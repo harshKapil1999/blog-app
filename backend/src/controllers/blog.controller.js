@@ -59,7 +59,21 @@ const createBlog = async (req, res, next) => {
 };
 
 const updateBlog = async (req, res) => {};
-const deleteBlog = async (req, res) => {};
+const deleteBlog = async (req, res) => {
+    const blogId = req.params.id;
+    
+    const blog = await Blog.findByIdAndDelete(blogId);
+    if(!blog) return next(apiErrorHandler(404, "Blog not found"));
+
+    const deleteBlogId = await User.findByIdAndUpdate(blog.creator, {
+        $pull: {
+            allBlogs: { $in: [ blogId ]},
+        }
+    })
+    //console.log(deleteBlogId)
+
+    res.status(200).json({blog, deleteBlogId, message:"blog deleted successfully"});
+};
 
 
 

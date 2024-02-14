@@ -63,7 +63,7 @@ export default function Blog() {
                   </div>
                 </div>
               </div>
-            <div className="flex items-center justify-between m-4 p-2 border-t">
+            <div className="flex items-center justify-between m-4 p-2 border-t text-muted-foreground">
               <p className=" text-xs ">{blog.views}</p>
               <span className=" flex items-center justify-center">
                 <p className="p-1 text-xs">{blog.likes}</p>
