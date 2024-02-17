@@ -6,8 +6,9 @@ const BlogSchema = new mongoose.Schema({
     description: { type: String, required: true },
     category: { type: String, required: true },
     imageUrl: { type: String, required: true },
-    likes: { type: Number, default: 0 },
-    views: { type: Number, default: 0 },
+    likes: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    views: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    comments: { type:mongoose.Schema.Types.ObjectId, ref: 'Comment'},
     creator: { type: mongoose.Schema.Types.ObjectId, ref: 'User'},
 }, { timestamps: true });
 

@@ -2,21 +2,30 @@ import { apiErrorHandler, errorHandler } from "../middlewares/errorhandler.middl
 import Blog from "../models/blog.model.js";
 import User from "../models/user.model.js";
 
-const getAllBlogs = async (req, res) => {
+const getAllBlogs = async (req, res, next) => {
     try {
-        const allBlogs = await Blog.find({}).populate('creator', '-password -email');
+        const allBlogs = await Blog.find({})
+            .populate('creator', '-password -email')
+            
         res.status(200).json(allBlogs);
     } catch (error) {
-        console.log(error);
+        next(errorHandler(error));
     }
 };
 
 const getBlogDetails = async (req, res, next) => {
-    const blogId = req.params['id'];
+    const blogId = req.params.id;
     /* const validBlog = await Blog.find({_id: blogId});
     if(!validBlog) return next(apiErrorHandler(404, "Blog not found"));  */
 
-    const blog = await Blog.findById(blogId).populate('creator', '-password -email');
+    const blog = await Blog.findById(blogId)
+        .populate('creator', '-password -email')
+        .populate('comments')
+        /* .populate({
+            path: 'comments',
+            model: 'Comment',
+            populate: { path: 'user', model: 'User', select: 'avatar name'} 
+        }); */
     if(!blog) return next(apiErrorHandler(404, "Blog not found"));
 
 
@@ -25,9 +34,9 @@ const getBlogDetails = async (req, res, next) => {
 
 const createBlog = async (req, res, next) => {
     const { title, imageUrl, shortDescription, description, category, userId } = req.body;
-    console.log({ title, imageUrl, shortDescription, description, category });
+    //console.log({ title, imageUrl, shortDescription, description, category });
     if(!title || !imageUrl || !shortDescription || !description || !category || !userId) {
-        return res.status(400).json({ message: "All fields are required" })
+        return next(apiErrorHandler(404, "All fields are required"))
     }
 
     const newBlog = new Blog({
@@ -54,12 +63,15 @@ const createBlog = async (req, res, next) => {
 
         res.status(201).json({newBlog, message: "Blog is Created Successfully"})
     } catch (error) {
-        errorHandler(error)
+        next(errorHandler(error))
     }
 };
 
-const updateBlog = async (req, res) => {};
-const deleteBlog = async (req, res) => {
+const updateBlog = async (req, res, next) => {
+
+};
+
+const deleteBlog = async (req, res, next) => {
     const blogId = req.params.id;
     
     const blog = await Blog.findByIdAndDelete(blogId);
@@ -72,7 +84,7 @@ const deleteBlog = async (req, res) => {
     })
     //console.log(deleteBlogId)
 
-    res.status(200).json({blog, deleteBlogId, message:"blog deleted successfully"});
+    res.status(200).json({blog, deleteBlogId, message:"Blog is deleted successfully!"});
 };
 
 

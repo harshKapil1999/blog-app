@@ -10,7 +10,6 @@ import { toast } from "sonner";
 export default function Blog() {
   const navigate = useNavigate();
   const [allBlogs, setAllBlogs] = useState([]);
-  const [views, setViews] = useState(0);
 
   useEffect(() => {
     axios.get('http://localhost:3000/api/blog')
@@ -26,10 +25,6 @@ export default function Blog() {
   }, [])
 
   //console.log(allBlogs) 
-  const handleUpdate = () => { 
-      setViews((prev) => prev+1);
-      console.log(views)
-  }
 
   return (
     
