@@ -3,14 +3,15 @@ import Comment from "../models/comments.model.js";
 import Blog from "../models/blog.model.js";
 
 const getAllComments = async (req, res, next) => {
-    /* const blogId = req.params.id;
+    const blogId = req.params.id;
+    console.log(blogId);
     if(!blogId) return next(apiErrorHandler(400, "Can not find the blog"));
 
-    const allComments = await Blog.findById(
-        {
-            _id: blogId
-        }
-    ) */
+    const allComments = await Blog.find({ comments: { $all: [ blogId ] }})
+
+    if(!allComments) return next(apiErrorHandler(404, "No comments yet"));
+
+    res.status(200).json(allComments);
 }
 
 

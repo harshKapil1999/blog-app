@@ -34,9 +34,20 @@ export default function SelectedBlog() {
                 const data = response.data;
                 setBlog(data);
                setViews(perv => perv + 1); 
-               setComments(data.comments);
+              
             })
-            .catch((error) => {toast(error.message)})
+            .catch((error) => {toast(error.message)});
+
+            axios.get(`http://localhost:3000/api/blog/${blogId}/comment/${blogId}`)
+              .then((response) => {
+                console.log(response);
+                const data = response.data;
+                setComments(data);
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+
     }, [blogId]);
 
 
@@ -57,11 +68,11 @@ export default function SelectedBlog() {
 
         axios.delete(`http://localhost:3000/api/blog/${blogId}`)
         .then((response) => {
-         // console.log(response)
+         //console.log(response)
           toast(response.data.message)
         })
         .catch((error) => {
-         // console.log(error)
+         //console.log(error)
           toast(error);
         })
       
@@ -88,8 +99,8 @@ export default function SelectedBlog() {
       }
       setFormData({...formData, likes: likes});
       
-      console.log(likes)
-      console.log(formData);
+      //console.log(likes)
+      //console.log(formData);
       }
 
     }
@@ -107,11 +118,13 @@ export default function SelectedBlog() {
 
       axios.post(`http://localhost:3000/api/blog/${blogId}/comment`, formData)
         .then((response) => {
+          toast(response.data.message);
           console.log(response);
         })
         .catch((error) => {
+          toast(error.message)
           console.log(error);
-        })
+        });
 
     }
     console.log(comments);
