@@ -19,13 +19,8 @@ const getBlogDetails = async (req, res, next) => {
     if(!validBlog) return next(apiErrorHandler(404, "Blog not found"));  */
 
     const blog = await Blog.findById(blogId)
-        .populate('creator', '-password -email')
-        .populate('comments')
-        /* .populate({
-            path: 'comments',
-            model: 'Comment',
-            populate: { path: 'user', model: 'User', select: 'avatar name'} 
-        }); */
+        .populate('creator', '-password -email');
+   
     if(!blog) return next(apiErrorHandler(404, "Blog not found"));
 
 

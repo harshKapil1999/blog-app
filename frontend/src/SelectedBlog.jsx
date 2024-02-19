@@ -3,50 +3,32 @@ import { useState, useEffect } from "react";
 import { Link, useParams, useLocation, useNavigate } from "react-router-dom"
 import { toast } from "sonner";
 import UserInfo from "./components/user-info";
-import { Heart, Send, Share2Icon, Trash2, XCircle } from "lucide-react";
+import { Heart, Share2Icon, Trash2 } from "lucide-react";
 
 import parse from "html-react-parser";
 import { Button } from "./components/ui/button";
 import { useSelector } from "react-redux"
+import Comments from "./components/comments";
 
 export default function SelectedBlog() {
+
+    const {currentUser} = useSelector(state => state.user);
+
     const {blogId} = useParams();
     let location = useLocation();
     const navigate = useNavigate();
+
     const [blog, setBlog] = useState({});
-    const [liked, setLiked] = useState(false);
-    const [likes, setLikes] = useState(0);
-    const [views, setViews] = useState(0);
-
-    const [comments, setComments] = useState([]);
-
-    const [formData, setFormData] = useState({
-      comment: '',
-      user: '',
-      blogId: ''
-    })
-    const {currentUser} = useSelector(state => state.user);
     
     useEffect(() => {
         axios.get(`http://localhost:3000/api/blog/${blogId}`)
             .then((response) => {
-              console.log(response)
+              //console.log(response)
                 const data = response.data;
                 setBlog(data);
-               setViews(perv => perv + 1); 
               
             })
             .catch((error) => {toast(error.message)});
-
-            axios.get(`http://localhost:3000/api/blog/${blogId}/comment/${blogId}`)
-              .then((response) => {
-                console.log(response);
-                const data = response.data;
-                setComments(data);
-              })
-              .catch((error) => {
-                console.log(error);
-              });
 
     }, [blogId]);
 
@@ -83,10 +65,11 @@ export default function SelectedBlog() {
     }
     
 
-    const handleLike = () => {
+   /*  const handleLike = () => {
       if (!currentUser) {
         return toast("Sign in to like the post");
       }
+      
         setLiked((prev) => !prev)
       if (blog._id) {
         
@@ -103,31 +86,7 @@ export default function SelectedBlog() {
       //console.log(formData);
       }
 
-    }
-    
-    //console.log(formData);
-    const handleCommentChange = (e) => {
-
-      setFormData({...formData, comment: e.target.value, user: currentUser._id, blogId: blogId }, )
-      
-    }
-
-    const handleUpdateComments = () => {
-      if(!currentUser) return toast("Login first to comment on the post");
-      //console.log(formData);
-
-      axios.post(`http://localhost:3000/api/blog/${blogId}/comment`, formData)
-        .then((response) => {
-          toast(response.data.message);
-          console.log(response);
-        })
-        .catch((error) => {
-          toast(error.message)
-          console.log(error);
-        });
-
-    }
-    console.log(comments);
+    } */
     
 
   return (
@@ -161,41 +120,17 @@ export default function SelectedBlog() {
                   <div>{parse(`${blog.description}`)}</div>
               </div>
               <div className="w-full flex items-center justify-between m-4 p-2 border-t text-muted-foreground">
-                <p className=" text-xs ">{views} views</p>
+                <p className=" text-xs ">0 views</p>
                 <span className=" flex items-center justify-center">
-                  <p className="p-1 text-xs">{likes}</p>
-                  <Heart fill="red" className=" w-6 h-6 cursor-pointer" onClick={handleLike}/>
+                  <p className="p-1 text-xs">0 </p>
+                  <Heart fill="red" className=" w-6 h-6 cursor-pointer" />
                 </span>
                 
               </div>
             </div>
             
         </div>
-        <div className="my-8 w-full max-w-4xl flex-col items-center justify-center m-auto">
-         <div className="w-full border p-8 px-10 flex flex-col">
-          <h1 className=" w-full my-2 text-3xl">Comments</h1>
-          <hr className="my-2"/>
-          <input name="comment" type="text" className="w-full p-3 my-2 border" onChange={handleCommentChange} />
-            <div className="flex">
-              <Button variant="ghost" className="w-fit" onClick={handleUpdateComments}><Send className=" w-6 h-6 "/></Button>
-              <Button variant="ghost" className="w-fit"><XCircle className=" w-6 h-6 "/></Button>
-            </div>
-          {/* {comments.map((c, index) => (
-            <div key={index} className="flex w-full">
-            <div className="flex">
-              <img src={c.user.avatar} alt="User Image" />
-              <p>{c.user.name}</p>
-            </div>
-            <div className="flex flex-col">
-              <p>{c.comment}</p>
-              <p>{c.createdAt}</p>
-            </div>
-            
-          </div>
-          ))} */}
-          
-         </div>
-        </div>
+        <Comments blogId={blogId} />
        
     </div>
   )

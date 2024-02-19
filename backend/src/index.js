@@ -28,7 +28,7 @@ app.use(express.json());
 app.use('/api/user', userRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/blog', blogRouter);
-app.use('/api/blog', commentRouter);
+app.use('/api/comment', commentRouter);
 
 app.use(errorHandler);
 /* app.use(express.urlencoded({

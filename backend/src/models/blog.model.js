@@ -8,7 +8,6 @@ const BlogSchema = new mongoose.Schema({
     imageUrl: { type: String, required: true },
     likes: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     views: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    comments: { type:mongoose.Schema.Types.ObjectId, ref: 'Comment'},
     creator: { type: mongoose.Schema.Types.ObjectId, ref: 'User'},
 }, { timestamps: true });
 
