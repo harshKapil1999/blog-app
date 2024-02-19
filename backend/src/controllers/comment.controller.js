@@ -41,7 +41,20 @@ const createNewComment = async (req, res, next) => {
 };
 
 
-const deleteComment = async (req, res, next) => {}
+const deleteComment = async (req, res, next) => {
+    const commentId = req.params.id;
+    console.log(commentId)
+
+    try {
+        
+        const deletedComment = await Comment.findByIdAndDelete(commentId);
+
+        res.status(200).json({ deletedComment, message: "Comment deleted successfully" });
+
+    } catch (error) {
+        next(apiErrorHandler(error));
+    }
+}
 
 export {
     getAllComments,
