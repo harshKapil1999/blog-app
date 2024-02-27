@@ -3,9 +3,23 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Button } from "./ui/button";
 import { toast } from "sonner";
+import { signOutSuccess } from "@/redux/user/userSlice"; 
+import { useDispatch } from "react-redux";
 
 const Profile = () => {
     const { currentUser } = useSelector(state => state.user);
+    const dispatch = useDispatch();
+    const handleSignout = async () => {
+        axios.post('http://localhost:3000/api/auth/signout')
+            .then((response) => {//console.log(response.data)
+            dispatch(signOutSuccess(response.data));
+            toast("User has been successfully Signed Out")
+            })
+            .catch((error) => {//console.log(error)
+            toast(error.message)
+            })
+    
+    }
     //console.log(currentUser)
     
     const [formData, setFormData] = useState({
@@ -21,11 +35,11 @@ const Profile = () => {
     }
 
     const handleSubmit = (e) => {
-        console.log(formData)
+        //console.log(formData)
         e.preventDefault()
         axios.patch(`http://localhost:3000/api/user/${currentUser._id}`, formData)
         .then((response) => {
-            console.log(response)
+            //console.log(response)
             const user = response.data.rest;
             toast(response.data.message);
             setFormData({
@@ -36,9 +50,23 @@ const Profile = () => {
             });
         })
         .catch((error) => {
-            console.log(error)
+            //console.log(error)
             toast(error.message);
         });
+    }
+
+    const handleDeleteUser = () => {
+        console.log(currentUser._id);
+        axios.delete(`http://localhost:3000/api/user/${currentUser._id}`)
+            .then((response) => {
+                //console.log(response);
+                toast(response.data.message);
+            })
+            .catch((error) => {
+                //console.log(error);
+                toast(error.message);
+            });
+        handleSignout();
     }
 
     return (
@@ -64,7 +92,7 @@ const Profile = () => {
             </div>
             <div className=" flex flex-col items-center max-w-md w-full my-4">
                 <h2 className=" text-xl my-2 w-full">Manage Account</h2>
-                <Button variant="destructive" className="mr-auto">Delete Account</Button>
+                <Button variant="destructive" className="mr-auto" onClick={handleDeleteUser}>Delete Account</Button>
 
             </div>
             

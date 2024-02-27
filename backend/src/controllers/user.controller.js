@@ -37,10 +37,25 @@ const updateUserInfo = async (req, res, next) => {
         next(apiErrorHandler(error));
     }
 
-}
+};
+
+const deleteUser = async (req, res, next) => {
+    const userId = req.params.id;
+    if(!userId) return next(apiErrorHandler(404, "User not found!"));
+
+    try {
+        const deletedUser = await User.findByIdAndDelete(userId);
+        if(!deletedUser) return next(apiErrorHandler(500, "Something went wrong!"));
+
+        res.status(200).json({deleteUser, message: "User deleted successfully!"});
+    } catch (error) {
+        next(apiErrorHandler(error))
+    }
+};
 
 export {
     getAllUsers,
     getUserInfoByID,
     updateUserInfo,
+    deleteUser,
 }

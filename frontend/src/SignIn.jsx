@@ -43,7 +43,7 @@ export default function SignIn() {
     <div className="flex items-start justify-center w-full min-h-screen flex-col md:flex-row">
       <div className="w-full p-10 items-center">
         <div className="w-full max-w-md mx-auto">
-          <h1 className="text-2xl lg:text-3xl py-2 font-bold">Sign up to your account</h1>
+          <h1 className="text-2xl lg:text-3xl py-2 font-bold">Sign in to your account</h1>
           <p className=" font-semibold py-1">Not a member? <Link to="/signup" className=" text-blue-800 hover:text-blue-700">Sign up</Link></p>
           <form className="flex flex-col" onSubmit={handleSubmit} >
             <label htmlFor="" className="my-1">Email address</label>
