@@ -5,7 +5,9 @@ import {
     deleteBlog,
     getAllBlogs,
     getBlogDetails,
-    updateBlog
+    updateBlog,
+    updateLikes,
+    updateViews
 
  } from "../controllers/blog.controller.js";
 
@@ -16,6 +18,7 @@ import {
  router.route('/').post(createBlog);
  router.route('/:id').patch(updateBlog);
  router.route('/:id').delete(deleteBlog);
-
+ router.route('/views/:id').patch(updateViews);
+ router.route('/likes/:id').patch(updateLikes);
 
  export default router;

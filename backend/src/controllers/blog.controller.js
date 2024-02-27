@@ -82,8 +82,54 @@ const deleteBlog = async (req, res, next) => {
     res.status(200).json({blog, deleteBlogId, message:"Blog is deleted successfully!"});
 };
 
+const updateViews = async (req, res, next) => {
+    const {userId} = req.body;
+    const blogId = req.params.id;
+    if(!userId || !blogId) return next(apiErrorHandler(404, "Something went wrong"));
+    //console.log(userId, blogId);
+    
+    try {
+        const blog = await Blog.findById(blogId);
+        if(!blog) return next(apiErrorHandler(404, "Something went wrong"));
 
+        const userIndex = blog.views.indexOf(userId);
+        if (userIndex === -1) {
+            blog.views.push(userId);
+        } else {
+            return
+        }
+        
+        res.status(200).json({blog, message: "Views Updated"})
+    } catch (error) {
+        next(apiErrorHandler(error))
+    }
+};
 
+const updateLikes = async (req, res, next) => {
+    const {userId} = req.body;
+    const blogId = req.params.id;
+    if(!userId || !blogId) return next(apiErrorHandler(404, "Something went wrong"));
+    //console.log(userId, blogId);
+
+    try {
+        const blog = await Blog.findById(blogId);
+        if(!blog) return next(apiErrorHandler(404, "Something went wrong"));
+        console.log(blog);
+        const userIndex = blog.likes.indexOf(userId);
+        console.log(userIndex);
+        if (userIndex === -1) {
+            blog.likes.push(userId);
+        } else {
+            blog.likes.splice(userIndex, 1);
+        }
+        
+        
+
+        res.status(200).json({blog, message: "Like Updated"})
+    } catch (error) {
+        next(apiErrorHandler(error))
+    }
+};
 
 export {
     getAllBlogs,
@@ -91,4 +137,6 @@ export {
     createBlog,
     updateBlog,
     deleteBlog,
+    updateViews,
+    updateLikes,
 };

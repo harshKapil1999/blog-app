@@ -19,19 +19,46 @@ export default function SelectedBlog() {
     const navigate = useNavigate();
 
     const [blog, setBlog] = useState({});
-    
+    const [likes, setLikes] = useState(0);
+    const [isLiked, setIsLiked] = useState(false);
+    const [views, setViews] = useState(0);
+
     useEffect(() => {
         axios.get(`http://localhost:3000/api/blog/${blogId}`)
             .then((response) => {
-              //console.log(response)
+              console.log(response)
                 const data = response.data;
-                setBlog(data);
-              
+                setBlog(data); 
             })
             .catch((error) => {toast(error.message)});
 
+            if(currentUser._id) {
+              const userId = currentUser._id;
+              axios.patch(`http://localhost:3000/api/blog/views/${blogId}`, {userId})
+                .then((response) => {
+                  const data = response.data;
+                  setViews(data.blog.views.length);
+                  setLikes(data.blog.likes.length);
+                })
+                .catch((error) => {
+                  console.log(error);
+                })
+            }
+
     }, [blogId]);
 
+    /* useEffect(() => {
+      if(currentUser._id) {
+        const userId = currentUser._id;
+        axios.patch(`http://localhost:3000/api/blog/views/${blogId}`, {userId})
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
+      }
+    }, []) */
 
     const handleShare = () => {
       const pathname = location.pathname;
@@ -64,29 +91,26 @@ export default function SelectedBlog() {
     }
     }
     
+    const handleUpdateLikes = (userId) => {
+      if(!userId) return toast("Signup first to like the blog.");
 
-   /*  const handleLike = () => {
-      if (!currentUser) {
-        return toast("Sign in to like the post");
-      }
-      
-        setLiked((prev) => !prev)
-      if (blog._id) {
-        
-      if (liked) {
-        setLikes(prev => prev - 1);
-        
-      }
-      else {
-       setLikes(prev => prev + 1);
-      }
-      setFormData({...formData, likes: likes});
-      
-      //console.log(likes)
-      //console.log(formData);
-      }
+      //setIsLiked(prev => !prev);
 
-    } */
+      /* if (isLiked) {
+        setLikes(prev => prev -1);
+      } else {
+        setLikes(prev => prev + 1);} */
+        axios.patch(`http://localhost:3000/api/blog/likes/${blogId}`, {userId})
+            .then((response) => {
+              console.log(response);
+              setLikes(response.data.blog.likes.length)
+            })
+            .catch((error) => {
+              console.log(error);
+            })
+      
+        //console.log(userId, isLiked, likes);
+    }
     
 
   return (
@@ -120,10 +144,13 @@ export default function SelectedBlog() {
                   <div>{parse(`${blog.description}`)}</div>
               </div>
               <div className="w-full flex items-center justify-between m-4 p-2 border-t text-muted-foreground">
-                <p className=" text-xs ">0 views</p>
+                <p className=" text-xs ">{views} views</p>
                 <span className=" flex items-center justify-center">
-                  <p className="p-1 text-xs">0 </p>
-                  <Heart fill="red" className=" w-6 h-6 cursor-pointer" />
+                  <p className="p-1 text-xs">{likes}</p>
+                  <Button variant='ghost' onClick={() => handleUpdateLikes(currentUser._id)}>
+                    <Heart fill="red" className=" w-6 h-6 text-red-700" />
+                  </Button>
+                  
                 </span>
                 
               </div>

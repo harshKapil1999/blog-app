@@ -80,7 +80,7 @@ export default function Comments({ blogId }) {
           <h1 className=" w-full my-2 text-3xl">Comments</h1>
           <hr className="my-2"/>
           <form method="post" onSubmit={e => {e.preventDefault()}}>
-            <input name="comment" type="text" className="w-full p-3 my-2 border" onChange={handleCommentChange} />
+            <input name="comment" type="text" className="w-full p-3 my-2 border" minLength={3} onChange={handleCommentChange} required/>
             <div className="flex">
               <Button variant="ghost" type="submit" className="w-fit" onClick={handleUpdateComments}><Send className=" w-6 h-6 "/></Button>
             </div>

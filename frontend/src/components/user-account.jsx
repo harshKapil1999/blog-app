@@ -42,11 +42,9 @@ export default function UserAccount() {
             <DropdownMenuLabel>{currentUser.name}</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <Link to="/profile">
-            <DropdownMenuItem>Profile</DropdownMenuItem>
+            <DropdownMenuItem>Profile / Settings</DropdownMenuItem>
             </Link>
-            <Link to="/signup">
-            <DropdownMenuItem>Settings</DropdownMenuItem>
-            </Link>
+            
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleSignout}>Sign out</DropdownMenuItem>
         </DropdownMenuContent>
