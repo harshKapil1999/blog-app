@@ -63,7 +63,7 @@ export default function Post() {
       //console.log(response)
       const data = response.data;
       toast(data.message);
-      console.log(data);
+      //console.log(data);
       setTimeout(() => {
         navigate(`/blog/${data.newBlog._id}`)
       }, 2000);
@@ -79,10 +79,10 @@ export default function Post() {
       <h1 className="text-2xl">Post</h1>
       <form className="flex flex-col w-full max-w-3xl">
         
-        <Label className="my-2">Title</Label>
+        <Label className="my-2">Blog Title</Label>
         <Input name='title' className="mb-4" type='text' onChange={handleChange} required/>
 
-        <Label className="my-2">Category</Label>
+        <Label className="my-2">Blog Category</Label>
         <Select name="category" onValueChange={(value) => handleSelectCategory(value)} required>
           <SelectTrigger>
             <SelectValue placeholder="Select Category" />
@@ -104,21 +104,21 @@ export default function Post() {
         <div className="w-full flex my-4 items-center gap-4">
           <Label className="">Thumbnail Image</Label>
           <UploadWidget className=" w-full" setCloudinaryResult={setCloudinaryResult}/>
-          {thumbnailUrl ? (
+          {thumbnailUrl && /* ? ( */
           <img src={thumbnailUrl} alt="preview image" className="w-[35dvw] h-auto min-h-[25dvw]"/>
-          ): (
+          /* ): (
            <div className="w-[35dvw] h-auto min-h-[25dvw] flex items-start justify-center bg-slate-600">
             <h1 className="m-auto text-2xl text-white">Preview Image</h1>
            </div>
-          )}
+          ) */}
           
         </div>
         
-        <Label className="my-2">Short Description</Label>
+        <Label className="my-2">Blog Subtitle</Label>
         <Textarea name='shortDescription' className="mb-4" onChange={handleChange} required/>
 
         <div className=" flex flex-col my-2 min-h-[60dvh] ">
-        <Label className="my-2">Description</Label>
+        <Label className="my-2">Blog Description</Label>
        {/*  <Textarea name='description' className="mb-4" onChange={handleChange} /> */}
         <ReactQuill theme="snow" className=" w-full h-[46dvh]" onChange={(value) => handleBlogDescription(value)} required/>
 

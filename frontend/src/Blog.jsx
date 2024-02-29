@@ -59,9 +59,9 @@ export default function Blog() {
                 </div>
               </div>
             <div className="flex items-center justify-between m-4 p-2 border-t text-muted-foreground">
-              <p className=" text-xs ">{blog.views}</p>
+              <p className=" text-xs ">{blog.views?.length} views</p>
               <span className=" flex items-center justify-center">
-                <p className="p-1 text-xs">{blog.likes}</p>
+                <p className="p-1 text-xs">{blog.likes?.length}</p>
                 <Heart fill="red" className="text-red-500 w-6 h-6" />
               </span>
               

@@ -4,8 +4,8 @@ export default function Footer() {
   return (
     <div className=" w-full py-16 bg-zinc-700 flex items-center justify-center text-white flex-col md:flex-row mt-6">
       <div className=" w-full max-w-xs pl-4 px-10 mb-auto order-last md:order-first mr-auto">
-        <h1 className="text-3xl py-3 font-bold">Inner Pieces</h1>
-        <p className="text-xs md:text-sm py-1">© 2028 by Inner Pieces.</p>
+        <h1 className="text-3xl py-3 font-bold">Harsh&apos;s Blogs</h1>
+        <p className="text-xs md:text-sm py-1">© 2028 by Harsh&apos;s Blogs.</p>
       </div>
       <div className="w-full pl-4 mb-auto mr-auto px-10 max-w-2xl">
         <h1 className="text-3xl py-3 font-bold">Contact</h1>

@@ -11,13 +11,17 @@ function Header() {
             href: "/"
         },
         {
-            name: "Blog",
+            name: "Blogs",
             href: "/blog"
         },
         {
             name: "About",
             href: "/about"
         },
+        /* {
+            name: "Post",
+            href: "/post"
+        }, */
     ]
 
     const location = useLocation();

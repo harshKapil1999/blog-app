@@ -41,7 +41,7 @@ export default function RecentPosts() {
                             <h2 className="font-bold py-2 text-xl">{blog.title}</h2>
                             <p className="py-2">{blog.shortDescription.length > 100 ? (blog.shortDescription.substring(0, 150) + '...') : (blog.shortDescription)}</p>
                         </div>
-                        <p>0 comments </p>
+                        <p>comments ... </p>
                     </div>
                 </div>))
                 }

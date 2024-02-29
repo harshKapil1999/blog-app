@@ -18,7 +18,7 @@ import {
  router.route('/').post(createBlog);
  router.route('/:id').patch(updateBlog);
  router.route('/:id').delete(deleteBlog);
- router.route('/views/:id').patch(updateViews);
- router.route('/likes/:id').patch(updateLikes);
+ router.route('/views/:id').put(updateViews);
+ router.route('/likes/:id').put(updateLikes);
 
  export default router;

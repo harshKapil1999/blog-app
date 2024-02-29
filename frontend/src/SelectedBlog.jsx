@@ -20,45 +20,22 @@ export default function SelectedBlog() {
 
     const [blog, setBlog] = useState({});
     const [likes, setLikes] = useState(0);
-    const [isLiked, setIsLiked] = useState(false);
+    //const [isLiked, setIsLiked] = useState(false);
     const [views, setViews] = useState(0);
 
     useEffect(() => {
         axios.get(`http://localhost:3000/api/blog/${blogId}`)
             .then((response) => {
-              console.log(response)
+              //console.log(response)
                 const data = response.data;
                 setBlog(data); 
+                setLikes(data.likes.length);
+                setViews(data.views.length);
             })
-            .catch((error) => {toast(error.message)});
-
-            if(currentUser._id) {
-              const userId = currentUser._id;
-              axios.patch(`http://localhost:3000/api/blog/views/${blogId}`, {userId})
-                .then((response) => {
-                  const data = response.data;
-                  setViews(data.blog.views.length);
-                  setLikes(data.blog.likes.length);
-                })
-                .catch((error) => {
-                  console.log(error);
-                })
-            }
+            .catch((error) => {toast(error.message)})
+            .finally(() => handleUpdateViews());
 
     }, [blogId]);
-
-    /* useEffect(() => {
-      if(currentUser._id) {
-        const userId = currentUser._id;
-        axios.patch(`http://localhost:3000/api/blog/views/${blogId}`, {userId})
-          .then((response) => {
-            console.log(response);
-          })
-          .catch((error) => {
-            console.log(error);
-          })
-      }
-    }, []) */
 
     const handleShare = () => {
       const pathname = location.pathname;
@@ -100,18 +77,35 @@ export default function SelectedBlog() {
         setLikes(prev => prev -1);
       } else {
         setLikes(prev => prev + 1);} */
-        axios.patch(`http://localhost:3000/api/blog/likes/${blogId}`, {userId})
+        axios.put(`http://localhost:3000/api/blog/likes/${blogId}`, {userId})
             .then((response) => {
               console.log(response);
-              setLikes(response.data.blog.likes.length)
+              setLikes(response.data.likedBlog.likes.length);
             })
             .catch((error) => {
+              toast(error.message)
               console.log(error);
             })
       
         //console.log(userId, isLiked, likes);
     }
     
+    const handleUpdateViews = () => {
+      if(!currentUser._id) {
+        return toast("Sign in to update the views!")
+      } 
+        else {
+          const userId = currentUser._id;
+          axios.put(`http://localhost:3000/api/blog/views/${blogId}`, {userId})
+            .then((response) => {
+              const data = response.data;
+              setViews(data.viewedBlog.views.length);
+            })
+            .catch((error) => {
+              console.log(error);
+            })
+        }
+    }
 
   return (
     <div className="w-full min-h-screen flex flex-col items-center justify-center p-2">

@@ -19,7 +19,7 @@ export default function Intro() {
                 className="p-4 aspect-square object-cover"
             />
             <div className="p-2">
-                <h1 className="text-center text-base md:text-xl font-semibold p-2">Detoxing my social media feed</h1>
+                <h1 className="text-center text-base md:text-xl font-semibold p-2">Elevate Your Thoughts, Embrace Your Reality</h1>
                 <p className="text-sm md:text-base p-2">Create a blog post subtitle that summarizes your post in a few short, punchy sentences and entices your audience to continue reading....</p>
             </div>
             <div className=" w-full flex items-center justify-center">

@@ -15,7 +15,7 @@ const UploadWidget = ({setCloudinaryResult}) => {
             
         }, function (error, result) {
             if (!error && result && result.event === "success") {
-                console.log('Done! Here is the image info: ', result.info); 
+                //console.log('Done! Here is the image info: ', result.info); 
                 setCloudinaryResult(result.info);
               }
             /* console.log(error);

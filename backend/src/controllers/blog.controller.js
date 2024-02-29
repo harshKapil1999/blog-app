@@ -85,21 +85,28 @@ const deleteBlog = async (req, res, next) => {
 const updateViews = async (req, res, next) => {
     const {userId} = req.body;
     const blogId = req.params.id;
-    if(!userId || !blogId) return next(apiErrorHandler(404, "Something went wrong"));
+    if(!userId || !blogId) return null;
     //console.log(userId, blogId);
     
     try {
-        const blog = await Blog.findById(blogId);
+        /* const blog = await Blog.findById(blogId);
         if(!blog) return next(apiErrorHandler(404, "Something went wrong"));
 
         const userIndex = blog.views.indexOf(userId);
         if (userIndex === -1) {
             blog.views.push(userId);
         } else {
-            return
-        }
+            return null;
+        } */
+
+        const viewedBlog = await Blog.findByIdAndUpdate(
+            blogId,
+            {
+                $push: {views: userId},
+            },
+        )
         
-        res.status(200).json({blog, message: "Views Updated"})
+        res.status(200).json({viewedBlog, message: "Views Updated"})
     } catch (error) {
         next(apiErrorHandler(error))
     }
@@ -112,7 +119,7 @@ const updateLikes = async (req, res, next) => {
     //console.log(userId, blogId);
 
     try {
-        const blog = await Blog.findById(blogId);
+        /* const blog = await Blog.findById(blogId);
         if(!blog) return next(apiErrorHandler(404, "Something went wrong"));
         console.log(blog);
         const userIndex = blog.likes.indexOf(userId);
@@ -121,11 +128,16 @@ const updateLikes = async (req, res, next) => {
             blog.likes.push(userId);
         } else {
             blog.likes.splice(userIndex, 1);
-        }
-        
-        
+        } */
 
-        res.status(200).json({blog, message: "Like Updated"})
+        const likedBlog = await Blog.findByIdAndUpdate(
+            blogId,
+            {
+                $push: {likes: userId},
+            },
+        )
+
+        res.status(200).json({likedBlog, message: "Like Updated"})
     } catch (error) {
         next(apiErrorHandler(error))
     }

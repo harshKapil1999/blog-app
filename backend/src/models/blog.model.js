@@ -1,3 +1,4 @@
+
 import mongoose from "mongoose";
 
 const BlogSchema = new mongoose.Schema({
@@ -6,8 +7,8 @@ const BlogSchema = new mongoose.Schema({
     description: { type: String, required: true },
     category: { type: String, required: true },
     imageUrl: { type: String, required: true },
-    likes: {  type: Array, default: [] },
-    views: { type: Array, default: [] },
+    likes: [{  type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    views: [{  type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     creator: { type: mongoose.Schema.Types.ObjectId, ref: 'User'},
 }, { timestamps: true });
 
