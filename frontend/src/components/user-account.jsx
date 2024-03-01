@@ -19,7 +19,7 @@ export default function UserAccount() {
   const {currentUser} = useSelector(state => state.user);
   const dispatch = useDispatch();
   const handleSignout = async () => {
-       axios.post('http://localhost:3000/api/auth/signout')
+       axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/signout`)
         .then((response) => {//console.log(response.data)
           dispatch(signOutSuccess(response.data));
           toast("User has been Successfully Signed out")
@@ -44,7 +44,9 @@ export default function UserAccount() {
             <Link to="/profile">
             <DropdownMenuItem>Profile / Settings</DropdownMenuItem>
             </Link>
-            
+            <Link to="/post">
+            <DropdownMenuItem>Create Blog</DropdownMenuItem>
+            </Link>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleSignout}>Sign out</DropdownMenuItem>
         </DropdownMenuContent>

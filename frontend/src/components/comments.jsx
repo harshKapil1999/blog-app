@@ -27,7 +27,7 @@ export default function Comments({ blogId }) {
       
 
       useEffect(() => {
-        axios.get(`http://localhost:3000/api/comment/${blogId}`)
+        axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/comment/${blogId}`)
             .then((response) => {
                 //console.log(response);
                 setComments(response.data);
@@ -48,7 +48,7 @@ export default function Comments({ blogId }) {
         if(!currentUser) return toast("Login first to comment on the post");
         //console.log(formData);
   
-        axios.post(`http://localhost:3000/api/comment`, formData)
+        axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/comment`, formData)
           .then((response) => {
             toast(response.data.message);
             //console.log(response);
@@ -63,13 +63,13 @@ export default function Comments({ blogId }) {
     const handleDeleteComment = (commentId) => {
         if(!currentUser) return toast("Unauthorized! You can not delete this comment!");
 
-        axios.delete(`http://localhost:3000/api/comment/${commentId}`)
+        axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/comment/${commentId}`)
         .then((response) => {
-            console.log(response)
+            //console.log(response)
             toast(response.data.message)
         })
         .catch((error) => {
-            console.log(error)
+            //console.log(error)
             toast(error.message)
         });
     }

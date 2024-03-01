@@ -24,7 +24,7 @@ export default function SelectedBlog() {
     const [views, setViews] = useState(0);
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/blog/${blogId}`)
+        axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/blog/${blogId}`)
             .then((response) => {
               //console.log(response)
                 const data = response.data;
@@ -52,7 +52,7 @@ export default function SelectedBlog() {
 
         toast("Authorized! You can delete this blog")
 
-        axios.delete(`http://localhost:3000/api/blog/${blogId}`)
+        axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/blog/${blogId}`)
         .then((response) => {
          //console.log(response)
           toast(response.data.message)
@@ -77,14 +77,14 @@ export default function SelectedBlog() {
         setLikes(prev => prev -1);
       } else {
         setLikes(prev => prev + 1);} */
-        axios.put(`http://localhost:3000/api/blog/likes/${blogId}`, {userId})
+        axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/blog/likes/${blogId}`, {userId})
             .then((response) => {
-              console.log(response);
+              //console.log(response);
               setLikes(response.data.likedBlog.likes.length);
             })
             .catch((error) => {
               toast(error.message)
-              console.log(error);
+              //console.log(error);
             })
       
         //console.log(userId, isLiked, likes);
@@ -92,17 +92,18 @@ export default function SelectedBlog() {
     
     const handleUpdateViews = () => {
       if(!currentUser._id) {
-        return toast("Sign in to update the views!")
+        return toast("Sign in to update the views!");
       } 
         else {
           const userId = currentUser._id;
-          axios.put(`http://localhost:3000/api/blog/views/${blogId}`, {userId})
+          axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/blog/views/${blogId}`, {userId})
             .then((response) => {
               const data = response.data;
               setViews(data.viewedBlog.views.length);
             })
             .catch((error) => {
-              console.log(error);
+              //console.log(error);
+              toast(error.message)
             })
         }
     }

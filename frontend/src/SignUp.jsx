@@ -15,7 +15,7 @@ export default function SignUp() {
   }
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:3000/api/auth/signup", formData)
+    axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/signup`, formData)
     .then((response) => {
       //console.log(response.status, response.data, response)
       toast("User Successfully Signed Up.")

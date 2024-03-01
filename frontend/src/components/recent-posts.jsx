@@ -2,6 +2,7 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import UserInfo from "./user-info";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 export default function RecentPosts() {
     const navigate = useNavigate();
@@ -9,7 +10,7 @@ export default function RecentPosts() {
     const [recentBlogs, setRecentBlogs] = useState([]);
 
     useEffect(() => {
-        axios.get("http://localhost:3000/api/blog")
+        axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/blog`)
             .then((response) => { 
                 //console.log(response)
                 const data = response.data;
@@ -17,7 +18,10 @@ export default function RecentPosts() {
                 //console.log(selectedBlogs.reverse());
                 setRecentBlogs(selectedBlogs.reverse());
             })
-            .catch((error) => {console.log(error)})
+            .catch((error) => {
+                //console.log(error)
+                toast(error.message);
+            })
     }, [])
 
   return (

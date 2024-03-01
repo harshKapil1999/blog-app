@@ -5,19 +5,19 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-
+/* Todo Render blogs in recent order, Apply filters according to blog category */
 
 export default function Blog() {
   const navigate = useNavigate();
   const [allBlogs, setAllBlogs] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:3000/api/blog')
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/blog`)
     .then((response) => {
       //console.log(response)
 
       const data = response.data
-      setAllBlogs(data);
+      setAllBlogs(data.reverse());
       
     })
     .catch((error) => toast(error.message))
@@ -28,7 +28,7 @@ export default function Blog() {
 
   return (
     
-    <div className="w-full min-h-screen flex flex-col ">
+    <div className="w-full min-h-screen flex flex-col p-2">
       <div className="w-full max-w-4xl items-center justify-center mx-auto">
         <div className="w-full flex flex-col">
           <h1 className="text-3xl font-bold p-2">Blog</h1>

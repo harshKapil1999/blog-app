@@ -58,7 +58,7 @@ export default function Post() {
 
   const handleSubmit = (e) => {
   e.preventDefault() 
-  axios.post("http://localhost:3000/api/blog", formData)
+  axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/blog`, formData)
     .then((response) => {
       //console.log(response)
       const data = response.data;

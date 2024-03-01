@@ -43,7 +43,7 @@ const createNewComment = async (req, res, next) => {
 
 const deleteComment = async (req, res, next) => {
     const commentId = req.params.id;
-    console.log(commentId)
+    //console.log(commentId)
 
     try {
         

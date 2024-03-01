@@ -10,7 +10,7 @@ const Profile = () => {
     const { currentUser } = useSelector(state => state.user);
     const dispatch = useDispatch();
     const handleSignout = async () => {
-        axios.post('http://localhost:3000/api/auth/signout')
+        axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/signout`)
             .then((response) => {//console.log(response.data)
             dispatch(signOutSuccess(response.data));
             toast("User has been successfully Signed Out")
@@ -37,7 +37,7 @@ const Profile = () => {
     const handleSubmit = (e) => {
         //console.log(formData)
         e.preventDefault()
-        axios.patch(`http://localhost:3000/api/user/${currentUser._id}`, formData)
+        axios.patch(`${import.meta.env.VITE_BACKEND_URL}/api/user/${currentUser._id}`, formData)
         .then((response) => {
             //console.log(response)
             const user = response.data.rest;
@@ -56,8 +56,8 @@ const Profile = () => {
     }
 
     const handleDeleteUser = () => {
-        console.log(currentUser._id);
-        axios.delete(`http://localhost:3000/api/user/${currentUser._id}`)
+        //console.log(currentUser._id);
+        axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/user/${currentUser._id}`)
             .then((response) => {
                 //console.log(response);
                 toast(response.data.message);
@@ -70,7 +70,7 @@ const Profile = () => {
     }
 
     return (
-        <div className="flex flex-col items-center justify-center w-full">
+        <div className="flex flex-col items-center justify-center w-full p-2">
             <div className="flex flex-col items-center max-w-md w-full">
                <h1 className="text-2xl p-2 mr-auto">Profile</h1>
                <img src={formData.avatar} name="avatar" alt={formData.name} className="h-20 w-20 rounded-full"/>

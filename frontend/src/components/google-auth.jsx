@@ -31,7 +31,7 @@ export default function GoogleAuth() {
                     avatar: user.photoURL,
                 }
                 //console.log(userData)
-                axios.post("http://localhost:3000/api/auth/google", userData)
+                axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/google`, userData)
                     .then((response) => {
                         dispatch(signInSuccess(response.data))
                         //console.log(/* response.status, response.data, */ response)
