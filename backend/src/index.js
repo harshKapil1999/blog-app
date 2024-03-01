@@ -41,11 +41,15 @@ app.use(errorHandler);
 
 
 //Routes
+app.get("/", (req, res) => {
+  res.send("Server is Running...")
+});
+
 app.get("/api/health", (req, res) => {
   res.send("hello world");
 });
 
 app.listen(port, () => {
-  //console.log(`Server is Running at PORT: ${port}`);
+  console.log(`Server is Running at PORT: ${port}`);
 });
 
