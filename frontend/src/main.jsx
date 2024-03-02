@@ -6,6 +6,7 @@ import { store, persistor} from './redux/store'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import { Toaster } from "@/components/ui/sonner"
+import { Analytics } from '@vercel/analytics/react';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -14,6 +15,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <App />
       <Toaster />
       </PersistGate>
+      <Analytics />
     </Provider>
   </React.StrictMode>
 )
