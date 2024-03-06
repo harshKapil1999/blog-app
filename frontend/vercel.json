@@ -1,24 +1,3 @@
 {
-    "rewrites": [
-        { 
-            "source": "/", 
-            "destination": "/" 
-        },
-        { 
-            "source": "/blog", 
-            "destination": "/blog" 
-        },
-        { 
-            "source": "/blog/:id", 
-            "destination": "/blog/:id" 
-        },
-        { 
-            "source": "/about", 
-            "destination": "/about" 
-        },
-        {
-            "source": "/.*",
-            "destination": "/"
-        }
-    ]
+    "rewrites": [{ "source": "/(.*)", "destination": "/" }]
   }
