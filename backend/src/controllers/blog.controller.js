@@ -89,22 +89,21 @@ const updateViews = async (req, res, next) => {
     //console.log(userId, blogId);
     
     try {
-        /* const blog = await Blog.findById(blogId);
+        const blog = await Blog.findById(blogId);
         if(!blog) return next(apiErrorHandler(404, "Something went wrong"));
 
         const userIndex = blog.views.indexOf(userId);
+        let viewedBlog = null;
         if (userIndex === -1) {
-            blog.views.push(userId);
+            viewedBlog = await Blog.findOneAndUpdate(
+                blog,
+                {
+                    $push: {views: userId},
+                },
+            )
         } else {
-            return null;
-        } */
-
-        const viewedBlog = await Blog.findByIdAndUpdate(
-            blogId,
-            {
-                $push: {views: userId},
-            },
-        )
+            viewedBlog = blog;
+        }
         
         res.status(200).json({viewedBlog, message: "Views Updated"})
     } catch (error) {
@@ -119,23 +118,27 @@ const updateLikes = async (req, res, next) => {
     //console.log(userId, blogId);
 
     try {
-        /* const blog = await Blog.findById(blogId);
+        const blog = await Blog.findById(blogId);
         if(!blog) return next(apiErrorHandler(404, "Something went wrong"));
-        console.log(blog);
+        //console.log(blog);
         const userIndex = blog.likes.indexOf(userId);
-        console.log(userIndex);
+        //console.log(userIndex);
+        let likedBlog = null;
         if (userIndex === -1) {
-            blog.likes.push(userId);
+            likedBlog = await Blog.findOneAndUpdate(
+                blog,
+                {
+                    $push: {likes: userId},
+                },
+            )
         } else {
-            blog.likes.splice(userIndex, 1);
-        } */
-
-        const likedBlog = await Blog.findByIdAndUpdate(
-            blogId,
-            {
-                $push: {likes: userId},
-            },
-        )
+            likedBlog = await Blog.findOneAndUpdate(
+                blog,
+                {
+                    $pull: {likes: userId},
+                },
+            )
+        }
 
         res.status(200).json({likedBlog, message: "Like Updated"})
     } catch (error) {
