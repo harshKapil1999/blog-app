@@ -31,11 +31,11 @@ export default function Blog() {
     <div className="w-full min-h-screen flex flex-col p-2">
       <div className="w-full max-w-4xl items-center justify-center mx-auto">
         <div className="w-full flex flex-col">
-          <h1 className="text-3xl font-bold p-2">Blog</h1>
-          <nav className="flex items-center justify-between w-full my-8">
+          <h1 className="text-3xl font-bold p-2">Blogs</h1>
+          <nav className="flex flex-col items-center w-full my-8">
             <p className=" text-muted-foreground text-sm p-2">All Posts</p>
-            <Link to="/post" className="p-2 outline hover:scale-105 hover:text-red-700 hover:outline-red-800 flex items-center">
-             <PlusCircle className="h-6 w-6 p-1" /> Create Blog
+            <Link to="/post" className="w-full max-w-md flex items-center justify-center p-2 outline hover:scale-105 hover:text-red-700 hover:outline-blue-700 transition-transform">
+             <PlusCircle className="h-6 w-6 p-1" /> Post a new Blog
             </Link>
           </nav>
             

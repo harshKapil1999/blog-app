@@ -20,7 +20,7 @@ export default function SelectedBlog() {
 
     const [blog, setBlog] = useState({});
     const [likes, setLikes] = useState(0);
-    //const [isLiked, setIsLiked] = useState(false);
+    const [isLiked, setIsLiked] = useState(false);
     const [views, setViews] = useState(0);
 
     useEffect(() => {
@@ -31,6 +31,7 @@ export default function SelectedBlog() {
                 setBlog(data); 
                 setLikes(data.likes.length);
                 setViews(data.views.length);
+                setIsLiked(data.likes.includes(currentUser?._id));
             })
             .catch((error) => {toast(error.message)})
             .finally(() => handleUpdateViews());
@@ -70,17 +71,19 @@ export default function SelectedBlog() {
     
     const handleUpdateLikes = (userId) => {
       if(!userId) return toast("Signup first to like the blog.");
-
-      //setIsLiked(prev => !prev);
-
-      /* if (isLiked) {
-        setLikes(prev => prev -1);
-      } else {
-        setLikes(prev => prev + 1);} */
         axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/blog/likes/${blogId}`, {userId})
             .then((response) => {
               //console.log(response);
-              setLikes(response.data.likedBlog.likes.length);
+              
+              //setLikes(response.data.likedBlog.likes.length);
+              setIsLiked(prev => !prev);
+              if(isLiked) {
+                setLikes(prev => prev - 1);
+                //toast("Blog Unliked");
+              } else {
+                setLikes(prev => prev + 1);
+                //toast("Blog Liked");
+              }
             })
             .catch((error) => {
               toast(error.message)
@@ -143,7 +146,8 @@ export default function SelectedBlog() {
                 <span className=" flex items-center justify-center">
                   <p className="p-1 text-xs">{likes}</p>
                   <Button variant='ghost' onClick={() => handleUpdateLikes(currentUser._id)}>
-                    <Heart fill="red" className=" w-6 h-6 text-red-700" />
+                    {isLiked ? <Heart fill="red" className=" w-6 h-6 text-red-700" /> : <Heart className=" w-6 h-6"/>}
+                    {/* <Heart fill="red" className=" w-6 h-6 text-red-700" /> */}
                   </Button>
                   
                 </span>

@@ -9,8 +9,10 @@ const getUserInfoByID = async (req, res) => {};
 
 const updateUserInfo = async (req, res, next) => {
     const userId = req.params.id;
+    if(!userId) return next(apiErrorHandler(404, "User not found!"));
     const { name, email, oldPassword, newPassword } = req.body;
-    console.log(name, email, oldPassword, newPassword);
+    if(!name || !email || !oldPassword || !newPassword) return next(apiErrorHandler(400, "All fields are required"));
+    //console.log(name, email, oldPassword, newPassword);
     const user = await User.findById(userId);
     if(!user) return next(apiErrorHandler(404, "User not found"));
 
