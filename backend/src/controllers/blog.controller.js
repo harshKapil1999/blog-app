@@ -13,8 +13,30 @@ const getAllBlogs = async (req, res, next) => {
     }
 };
 
+const getBlogsByCategory = async (req, res, next) => {
+    const category = req.params.category;
+    if(!category) return next(apiErrorHandler(404, "Category not found"));
+    //console.log(category);
+    try {
+        let allBlogs = [];
+        if(category === "all") {
+             allBlogs = await Blog.find({})
+                .populate('creator', '-password -email')
+        }
+        else{
+         allBlogs = await Blog.find({ category })
+            .populate('creator', '-password -email')
+        }
+        //if(allBlogs.length === 0) return next(apiErrorHandler(404, "No Blogs found in this category"));
+        res.status(200).json(allBlogs);
+    } catch (error) {
+        next(errorHandler(error));
+    }
+};
+
 const getBlogDetails = async (req, res, next) => {
     const blogId = req.params.id;
+    //console.log(blogId);
     /* const validBlog = await Blog.find({_id: blogId});
     if(!validBlog) return next(apiErrorHandler(404, "Blog not found"));  */
 
@@ -22,7 +44,7 @@ const getBlogDetails = async (req, res, next) => {
         .populate('creator', '-password -email');
    
     if(!blog) return next(apiErrorHandler(404, "Blog not found"));
-
+    //console.log(blog);
 
     res.status(200).json(blog);
 };
@@ -148,6 +170,7 @@ const updateLikes = async (req, res, next) => {
 
 export {
     getAllBlogs,
+    getBlogsByCategory,
     getBlogDetails,
     createBlog,
     updateBlog,

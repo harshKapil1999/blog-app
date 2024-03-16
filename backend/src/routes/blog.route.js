@@ -5,6 +5,7 @@ import {
     deleteBlog,
     getAllBlogs,
     getBlogDetails,
+    getBlogsByCategory,
     updateBlog,
     updateLikes,
     updateViews
@@ -14,6 +15,7 @@ import {
  const router = Router();
 
  router.route('/').get(getAllBlogs);
+ router.route('/category/:category').get(getBlogsByCategory);
  router.route('/:id').get(getBlogDetails);
  router.route('/').post(createBlog);
  router.route('/:id').patch(updateBlog);

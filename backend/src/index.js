@@ -1,7 +1,7 @@
 import 'dotenv/config'
 import express from "express"
 import cors from 'cors';
-
+import { Resend } from "resend";
 import ConnectDB from "./db/connection.db.js"
 
 import userRouter from "./routes/user.route.js"
@@ -13,7 +13,7 @@ import { errorHandler } from './middlewares/errorhandler.middleware.js';
 
 const app = express();
 const port = process.env.PORT;
-
+const resend = new Resend(process.env.RESEND_API_KEY);
 //Database connection
 ConnectDB();
  
@@ -39,7 +39,18 @@ app.use(errorHandler);
 //app.use(express.static("public"))
 //app.use(cookieParser())
 
+app.get("/api/email", async (req, res) => {
+  const { data, error } = await resend.emails.send({
+    from: "BlogApp <harshkapil7@gmail.com>",
+    to: ["kapilharsh1999@gmail.com"],
+    subject: "hello world",
+    html: "<strong> This is email test. it works!</strong>",
+  });
 
+  if (error) return res.status(400).json({ error });
+
+  res.status(200).json({ data });
+})
 //Routes
 app.get("/", (req, res) => {
   res.send("Server is Running...")

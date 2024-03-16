@@ -6,7 +6,9 @@ import jwt from "jsonwebtoken";
 const signUp = async (req, res, next) => {
     const { name, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ name, email, password: hashedPassword });
+    const existingUsers = await User.find({});
+    const usersLength = existingUsers.length;
+    const newUser = new User({ name, email, password: hashedPassword, avatar: `https://picsum.photos/${300 + usersLength}`});
 
     try {
         await newUser.save()
