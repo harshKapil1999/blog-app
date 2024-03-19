@@ -32,8 +32,9 @@ const createNewComment = async (req, res, next) => {
                 blogId
             })
         await newComment.save();
+        const commentWithUser = await newComment.populate('user', 'name avatar');
 
-        res.status(200).json({newComment, message: "Comment created successfully"});
+        res.status(200).json({commentWithUser, message: "Comment created successfully"});
 
     } catch (error) {
         next(apiErrorHandler(error))

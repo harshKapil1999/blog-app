@@ -46,7 +46,7 @@ export default function Blog() {
           <h1 className="text-3xl font-bold p-2">Blogs</h1>
           <nav className="flex flex-col items-center w-full my-8">
             <p className=" text-muted-foreground text-sm p-2">All Posts</p>
-            <Link to="/post" className="w-full max-w-md flex items-center justify-center p-2 outline hover:scale-105 hover:text-red-700 hover:outline-blue-700 transition-transform">
+            <Link to="/post" className="w-full max-w-md flex items-center justify-center p-2 outline hover:scale-105 hover:text-red-700 hover:outline-green-700 transition-transform">
              <PlusCircle className="h-6 w-6 p-1" /> Post a new Blog
             </Link>
           </nav>

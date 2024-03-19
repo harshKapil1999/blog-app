@@ -51,6 +51,7 @@ export default function Comments({ blogId }) {
         axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/comment`, formData)
           .then((response) => {
             toast(response.data.message);
+            setComments(prev => [response.data.commentWithUser, ...prev ])
             //console.log(response);
           })
           .catch((error) => {
@@ -67,6 +68,7 @@ export default function Comments({ blogId }) {
         .then((response) => {
             //console.log(response)
             toast(response.data.message)
+            setComments(prev => prev.filter(c => c._id !== commentId))
         })
         .catch((error) => {
             //console.log(error)
