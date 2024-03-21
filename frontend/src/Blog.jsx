@@ -4,7 +4,8 @@ import { Heart, PlusCircle } from "lucide-react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { Button } from "./components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./components/ui/select";
+import { Label } from "@radix-ui/react-dropdown-menu";
 
 /* Todo Render blogs in recent order, Apply filters according to blog categories */
 
@@ -50,13 +51,22 @@ export default function Blog() {
              <PlusCircle className="h-6 w-6 p-1" /> Post a new Blog
             </Link>
           </nav>
-          <ul className="flex w-full flex-wrap">
-            {categories.map((category, index) => (
-              <li key={index} className="text-sm p-2 hover:text-red-700">
-                <Button variant="ghost" size="sm" onClick={() => handleSelectCategory(category)} >{category}</Button>
-              </li>
-            ))}
-          </ul>  
+          <div className="flex w-full items-center justify-center p-2 max-w-md m-auto">
+            <Label className="px-2">Categories</Label>
+            <Select onValueChange={(value) => handleSelectCategory(value)}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select a category" />
+              </SelectTrigger>
+              <SelectContent>
+                {categories.map((category, index) => (
+                  <SelectItem key={index} value={category}>
+                    {category}
+                  </SelectItem>
+                  ))
+                }
+              </SelectContent>
+            </Select>
+          </div>  
         </div>
         {allBlogs.length === 0 ? (
             <div className="w-full border min-h-screen flex items-center justify-center">
